@@ -1,0 +1,541 @@
+openapi: 3.0.3
+info:
+  title: Sample Ecommerce App
+  description: 'This is an E-commerce App'
+  termsOfService: 'The terms of SErvice'
+  contact:
+    name: Erick Mutwiri
+    email: erickmwarama@gmail.com
+  licence:
+    name: MIT
+    url: https://github.com/erickmwarama2/ecommerce
+  version: 1.0.0
+externalDocs:
+  description: Document link you want to generate along with API
+  url: http://swagger.io
+servers:
+  url: https://ecommerce.swagger.io/v2
+tags:
+  name: cart
+  description: Everything about cart
+  externalDocs:
+    description: Find out more (extra doc link)
+    url: http://swagger.io
+  name: order
+  description: Operations about orders
+  name: user
+  description: Operations about users
+paths:
+  /api/v1/carts/{customerId}:
+    get:
+      tags:
+        - cart
+      summary: Returns the shopping cart
+      description: Returns the shopping cart of the given customer
+      operationId: getCartByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer Identifier
+          required: true 
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        404:
+          description: Given customer ID doesn't exist
+          content: {}
+    delete:
+      tags:
+        - cart
+      summary: Delete the shopping cart
+      description: Delete the shopping cart
+      operationId: deleteCart
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer identifier
+          required: true 
+          schema:
+            type: string
+      responses:
+        204:
+          description: successful operation
+        404:
+          description: Given customer id doesn't exist
+          content: {}
+  /api/v1/carts/{customerId}/items/{itemId}:
+    get:
+      tags:
+        - cart
+      summary: Return the given item from the shopping cart
+      description: Return the given item from the shopping cart
+      operationId: getCartItemsByItemId
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer Identifier
+          required: true 
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          description: Item (product) identifier
+          required: true 
+          schema:
+            type: string
+      responses:
+        200:
+          description: If item exists in cart
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        404:
+          description: Given item (product) ID does not exist
+          content: {}
+    delete:
+      tags:
+        - cart
+      summary: Delete Item from the cart
+      description: Deletes the item from the shopping cart
+      operationId: deleteItemFromCart
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer identifier
+          required: true 
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          description: Item (product) Identifier
+          required: true 
+          schema:
+            type: string
+      responses:
+        202:
+          description: Accepts request regardles of whether item exists or not
+  /api/v1/carts/{customerId}/items:
+    get:
+      tags:
+        - cart
+      summary: Returns list of items in user's shopping cart
+      description: Returns items in shopping cart of customer
+      operationId: getCartItemsByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer identifier
+          required: true 
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        404:
+          description: Given customer ID couldn't be found
+          content: {}
+    put:
+      tags:
+        - cart
+      summary: Replace/Add an item in shopping cart
+      description: Add an item to shopping cart if it doesn't exist or replace with given item
+      operationId: addOrReplaceItemsByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer Identifier
+          required: true 
+          schema:
+            type: string
+      requestBody:
+        description: Item object
+        content: 
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Item'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        201:
+          description: Item added succesfully
+          content:
+            application/xml:
+              type: array
+              items:
+                schema:
+                  $ref: '#/components/schemas/Item'
+            application/json:
+              type: array
+              items:
+                schema:
+                  $ref: '#/components/schemas/Item'
+        404:
+          description: Given customer ID could not be found
+          content: {}
+    post:
+      tags:
+        - cart
+      summary: Add an item to the shopping cart
+      description: Add an item to the shopping cart
+      operationId: addCartItemsByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer Identifier
+          required: true 
+          schema:
+            type: string
+      requestBody:
+        description: Item object
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Item'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        201:
+          description: Item added successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        404:
+          description: Given customer ID doesn't exist
+          content: {}
+components:
+  schemas:
+    Cart:
+      description: Shopping Cart of the user
+      type: object
+      properties: 
+        customerId:
+          description: Id of the customer
+          type: string
+        items:
+          description: Collection of items in cart
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        orderDate:
+          type: string
+          format: date-time
+    Item:
+      description: Items in shopping cart
+      type: object
+      properties:
+        id:
+          description: Item identifier
+          type: string
+        quantity:
+          description: The item quantity
+          type: number
+          format: int32
+        unitPrice:
+          description: The item's price per unit
+          type: number
+          format: double
+    Order:
+      description: represents an order
+      type: object
+      properties:  
+        id:
+          description: order identifier
+          type: string
+        customer:
+          $ref: '#/components/schemas/User'
+        address:
+          $ref: '#/components/schemas/Address'
+        card:
+          $ref: '#/components/schemas/Card'
+        date:
+          description: Order's date and time details
+          type: string
+          format: date-time
+        items:
+          description: Collection of items in order
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        total:
+          description: Order total
+          type: number
+          format: double
+        payment:
+          $ref: '#/components/schemas/Payment'
+        shipment:
+          $ref: '#/components/schemas/Shipment'
+        status:
+          description: Status of the order
+          type: string
+          enum:
+            - CREATED
+            - PAID
+            - SHIPPED
+            - PAYMENT_FAILED
+            - SHIPMENT_FAILED
+            - COMPLETED
+      xml:
+        name: Order
+    AddAddressReq:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - type: object
+            properties:
+              userId:
+                type: string
+      xml:
+        name: AddAddressReq
+    Address:
+      description: Address of User
+      type: object
+      properties:
+        number:
+          description: house or flat number
+          type: string
+        residency:
+          description: society or building name
+          type: string
+        street:
+          description: street name
+          type: string
+        city:
+          description: city
+          type: string
+        state:
+          description: state name
+          type: string
+        country: 
+          description: country
+          type: string
+        pincode:
+          description: postal code
+          type: string
+      xml:
+        name: Address
+    Card:
+      description: Card to process payment
+      type: object
+      properties:
+        cardNumber:
+          description: Card Number
+          type: string
+        expires:
+          description: Expiration date
+          type: string
+        ccv: 
+          description: ccv code
+          type: string
+      xml:
+        name: Card
+    AddCardReq:
+      description: Request object for new card registration
+      allOf:
+        - $ref: '#/components/schemas/Card'
+        - type: object
+          properties:   
+            userId:
+              type: object
+      xml:
+        name: AddCardReq
+    Payment:
+      type: object
+      properties:
+        authorized:
+          description: Flag that specified whether payment is authorized or not
+          type: boolean
+        message:
+          description: Approval or rejection message
+          type: string
+      xml:
+        name: Payment
+    Shipment:
+      type: object
+      properties:
+        orderId:
+          description: Order Identifier
+          type: string
+        carrier:
+          description: Shipping Carrier
+          type: string
+        trackingNumber:
+          description: Shipping Tracking Number
+          type: string
+        estDeliveryDate:
+          description: Estimated Delivery DAte
+          type: string
+          format: date
+      xml:
+        name: Shipment
+    ShippingReq:
+      description: Contains info required for shipping request
+      type: object
+      properties:   
+        orderId: 
+          description: Order identifier
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        itemCount:
+          description: The number of items in order
+          type: integer
+          format: int32
+      xml:
+        name: ShippingReq
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+      xml:
+        name: User
+    NewOrder:
+      description: Contains new order request information
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/URI'
+        address:
+          $ref: '#/components/schemas/URI'
+        card:
+          $ref: '#/components/schemas/URI'
+        items:
+          $ref: '#/components/schemas/URI'
+      xml:
+        name: NewOrder
+    URI:
+      type: object
+      xml:
+        name: URI
+    Authorization:
+      type: object
+      properties:
+        orderId:
+          description: Order identification
+          type: string
+        time:
+          description: Timestamp when this authorization was created
+          type: string
+          format: date-time
+        authorized:
+          description: Flag that specify whether payment is authorized
+          type: boolean
+        message:
+          description: Approval or rejection message
+          type: string
+        error: 
+          description: processing error description, if any
+          type: string
+      xml:
+        name: Authorization
+    PaymentReq:
+      description: Contains payment request info
+      type: object
+      properties:
+        orderId:
+          description: Order identifier
+          type: string
+        customer:
+          $ref: '#/components/schemas/CustomerInfoOnCard'
+        address:
+          $ref: '#/components/schemas/Address'
+        card:
+          $ref: '#/components/schemas/Card'
+        amount:
+          description: Payment amount
+          type: number
+          format: float
+      xml:
+        name: PaymentReq
+    CustomerInfoOnCard:
+      description: Customer info required for payment processing
+      type: object
+      properties:
+        firstName:
+          description: Customer first name
+          type: string
+        lastName:
+          description: Customer last name
+          type: string
+      xml:
+        name: CustomerInfoOnCard
+    Product:
+      description: Product info
+      type: object
+      properties:
+        id:
+          description: identifier
+          type: string
+        name:
+          description: Product Name
+          type: string
+        description:  
+          description: product description
+          type: string
+        imageUrl:
+          type: string
+        price:
+          type: number
+          format: double
+        count:
+          type: integer
+          format: int32
+        tag:
+          description: tags associated with the product
+          type: array
+          uniqueItems: true
+          items:
+            type: string

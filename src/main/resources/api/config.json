@@ -1,0 +1,16 @@
+{
+    "library": "spring-mvc",
+    "dateLibrary": "java8",
+    "hideGenerationTimestamp": true,
+    "modelPackage": "com.erick.mutwiri.api.model",
+    "apiPackage": "com.erick.mutwiri.api",
+    "invokerPackage": "com.erick.mutwiri.api",
+    "serializableModel": true,
+    "useTags": true,
+    "useGzipFeature" : true,
+    "hateoas": true,
+    "withXml": true,
+    "importMappings": {
+        "Link": "org.springframework.hateoas.Link"
+    }
+}
