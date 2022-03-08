@@ -29,4 +29,36 @@ public class PaymentEntity {
 
     @OneToOne(mappedBy = "paymentEntity")
     private OrderEntity orderEntity;
+
+    public OrderEntity getOrderEntity() {
+        return orderEntity;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public boolean isAuthorized() {
+        return authorized;
+    }
+
+    public void setAuthorized(boolean authorized) {
+        this.authorized = authorized;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setOrderEntity(OrderEntity orderEntity) {
+        this.orderEntity = orderEntity;
+    }
 }

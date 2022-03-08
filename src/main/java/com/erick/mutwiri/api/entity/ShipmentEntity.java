@@ -26,4 +26,28 @@ public class ShipmentEntity {
 
     @Column(name = "CARRIER")
     private String carrier;
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Timestamp getEstDeliveryDate() {
+        return estDeliveryDate;
+    }
+
+    public void setEstDeliveryDate(Timestamp estDeliveryDate) {
+        this.estDeliveryDate = estDeliveryDate;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
 }

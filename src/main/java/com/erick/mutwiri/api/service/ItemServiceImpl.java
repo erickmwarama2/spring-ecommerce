@@ -10,6 +10,9 @@ import com.erick.mutwiri.api.entity.ItemEntity;
 import com.erick.mutwiri.api.entity.ProductEntity;
 import com.erick.mutwiri.api.model.Item;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ItemServiceImpl implements ItemService {
 
     @Override

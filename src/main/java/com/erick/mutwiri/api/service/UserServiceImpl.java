@@ -8,6 +8,9 @@ import com.erick.mutwiri.api.entity.CardEntity;
 import com.erick.mutwiri.api.entity.UserEntity;
 import com.erick.mutwiri.api.repository.UserRepository;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository repository;

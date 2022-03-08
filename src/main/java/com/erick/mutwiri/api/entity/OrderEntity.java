@@ -74,4 +74,92 @@ public class OrderEntity {
 
     @OneToOne(mappedBy = "orderEntity")
     private AuthorizationEntity AuthorizationEntity;
+
+    public AuthorizationEntity getAuthorizationEntity() {
+        return AuthorizationEntity;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public AddressEntity getAddressEntity() {
+        return addressEntity;
+    }
+
+    public void setAddressEntity(AddressEntity addressEntity) {
+        this.addressEntity = addressEntity;
+    }
+
+    public PaymentEntity getPaymentEntity() {
+        return paymentEntity;
+    }
+
+    public void setPaymentEntity(PaymentEntity paymentEntity) {
+        this.paymentEntity = paymentEntity;
+    }
+
+    public ShipmentEntity getShipment() {
+        return shipment;
+    }
+
+    public void setShipment(ShipmentEntity shipment) {
+        this.shipment = shipment;
+    }
+
+    public CardEntity getCardEntity() {
+        return cardEntity;
+    }
+
+    public void setCardEntity(CardEntity cardEntity) {
+        this.cardEntity = cardEntity;
+    }
+
+    public Timestamp getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
+
+    public void setAuthorizationEntity(AuthorizationEntity authorizationEntity) {
+        this.AuthorizationEntity = authorizationEntity;
+    }
 }

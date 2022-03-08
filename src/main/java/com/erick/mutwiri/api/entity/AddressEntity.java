@@ -29,6 +29,9 @@ public class AddressEntity {
     @Column(name = "RESIDENCY")
     private String residency;
 
+    @Column(name = "RESIDENCY")
+    private String street;
+
     @Column(name = "CITY")
     private String city;
 
@@ -43,4 +46,85 @@ public class AddressEntity {
 
     @OneToMany(mappedBy = "addressEntity", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<OrderEntity> orders;
+
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public AddressEntity setStreet(String street) {
+        this.street = street;
+        return this;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public AddressEntity setId(UUID id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public AddressEntity setNumber(String number) {
+        this.number = number;
+        return this;
+    }
+
+    public String getResidency() {
+        return residency;
+    }
+
+    public AddressEntity setResidency(String residency) {
+        this.residency = residency;
+        return this;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public AddressEntity setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public AddressEntity setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public AddressEntity setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public AddressEntity setPincode(String pincode) {
+        this.pincode = pincode;
+        return this;
+    }
+
+    public AddressEntity setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+        return this;
+    }
 }
